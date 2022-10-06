@@ -1,0 +1,241 @@
+{{ 'contact-us.css' | asset_url | stylesheet_tag }}
+
+<style>
+     .field__input-form{
+        background: {{ section.settings.input_background }};
+        border: 3px solid {{ section.settings.input_color_border }};
+    }
+    .field__input-form:focus{
+        border: 0px solid {{ section.settings.input_color_border }};
+        outline: {{ section.settings.input_color_border }};
+    }
+    .field__input-form::placeholder{
+        font-size: 16px;
+        color: {{ section.settings.placeholder }};   
+    }
+    .custom-form-button{
+        border: none;
+        font-size: 16px;
+        color: {{section.settings.button_color}};
+        background: {{ section.settings.button_background }};
+    }
+    .disclaimer, 
+    .disclaimer a{
+        font-size: 16px;
+        text-decoration: none;
+        color: {{ section.settings.heading_color }};
+    }
+</style>
+
+<div class="contact-us" style="flex-direction: {{ section.settings.layout }};">
+    <div class="flex-child-image" >
+        <img src="{{ section.settings.image | img_url: 'grande' }} " alt="{{ block.settings.image.alt | escape }}">
+    </div>
+
+    <div class="flex-child-form-contact" style="background-color: {{ section.settings.background_form }};">
+        <div class="contact page-width">
+            {%- if section.settings.heading != blank -%}
+              <h2 class="title title-wrapper--no-top-margin {{ section.settings.heading_size }}"
+              style="color: {{ section.settings.heading_color }};
+                     text-align: {{ section.settings.heading-align-text }};">
+                     {{ section.settings.heading | escape }}</h2>
+            {%- else -%}
+              <h2 class="visually-hidden">{{ 'templates.contact.form.title' | t }}</h2>
+            {%- endif -%}
+            {%- form 'contact', id: 'ContactForm', class: 'isolate' -%}
+              {%- if form.posted_successfully? -%}
+                <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>{% render 'icon-success' %} {{ 'templates.contact.form.post_success' | t }}</h2>
+              {%- elsif form.errors -%}
+                <div class="form__message">
+                  <h2 class="form-status caption-large text-body" role="alert" tabindex="-1" autofocus>{% render 'icon-error' %} {{ 'templates.contact.form.error_heading' | t }}</h2>
+                </div>
+                <ul class="form-status-list caption-large" role="list">
+                  <li>
+                    <a href="#ContactForm-email" class="link">
+                      {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}
+                    </a>
+                  </li>
+                </ul>
+              {%- endif -%}
+
+              <div class="contact__fields-form">
+                <div class="field-form">
+                  <input class="field__input-form" autocomplete="name" type="text" id="ContactForm-name" name="contact[{{ 'templates.contact.form.name' | t }}]" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}" placeholder="{{ 'templates.contact.form.name' | t }}">
+                 <!--  <label class="field__label" for="ContactForm-name">{{ 'templates.contact.form.name' | t }}</label> -->
+                </div>
+
+                <div class="field-form">
+                  <input
+                    autocomplete="email"
+                    type="email"
+                    id="ContactForm-email"
+                    class="field__input-form"
+                    name="contact[email]"
+                    spellcheck="false"
+                    autocapitalize="off"
+                    value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                    aria-required="true"
+                    {% if form.errors contains 'email' %}
+                      aria-invalid="true"
+                      aria-describedby="ContactForm-email-error"
+                    {% endif %}
+                    placeholder="{{ 'templates.contact.form.email' | t }}"
+                  >
+                 <!--  <label class="field__label" for="ContactForm-email">{{ 'templates.contact.form.email' | t }} <span aria-hidden="true">*</span></label> -->
+                  {%- if form.errors contains 'email' -%}
+                    <small class="contact__field-error" id="ContactForm-email-error">
+                      <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
+                      <span class="form__message">{% render 'icon-error' %}{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</span>
+                    </small>
+                  {%- endif -%}
+                </div>
+              </div>
+
+              {% if section.settings.show-telephone == true %}
+                <div class="field">
+                    <input type="tel" id="ContactForm-phone" class="field__input" autocomplete="tel" name="contact[{{ 'templates.contact.form.phone' | t }}]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}" placeholder="{{ 'templates.contact.form.phone' | t }}">
+                    <label class="field__label" for="ContactForm-phone">{{ 'templates.contact.form.phone' | t }}</label>
+                </div>
+              {% endif %}
+              
+              <div class="field-form">
+                <textarea
+                  rows="5"
+                  id="ContactForm-body"
+                  class="text-area field__input-form input-half-border-radius"
+                  name="contact[{{ 'templates.contact.form.comment' | t }}]"
+                  placeholder="Message"
+                >
+                  {{- form.body -}}
+                </textarea>
+               <!--  <label class="form__label field__label" for="ContactForm-body">{{ 'templates.contact.form.comment' | t }}</label> -->
+              </div>
+              <div class="contact__button-form">
+                <button type="submit" class="custom-form-button">
+                  Submit
+                </button>
+              </div>
+            {%- endform -%}
+             {% comment %}
+              Remove the following three lines of code to remove the note
+              about being protected by Google's reCAPTCHA service.
+              By removing it, the small reCAPTCHA widget will appear in the
+              bottom right corner of the page.
+            {% endcomment %}
+            <div class="disclaimer">
+                {{ 'shopify.online_store.spam_detection.disclaimer_html' | t }}
+            </div>
+          </div>
+         
+    </div>
+</div>
+{% schema %}
+{
+  "name": "Contact us",
+  "class": "contact-us",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Featured image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "We love hearing from our customers!",
+      "label":"Heading form"
+    },
+    {
+        "type": "select",
+        "options": [
+          {
+            "value": "left",
+            "label": "left"
+          },
+          {
+            "value": "right",
+            "label": "right"
+          },
+          {
+            "value": "center",
+            "label": "center"
+          }
+        ],
+        "id": "heading-align-text",
+        "default": "center",
+        "label": "Align text heading"
+    },
+    {
+        "type": "color",
+        "id": "heading_color",
+        "label": "Color heading",
+        "default": "#fff"
+    },
+    {
+        "type": "color",
+        "id": "background_form",
+        "label":"Background",
+        "default": "#f24069"
+    },
+    {
+        "type": "select",
+        "id": "layout",
+        "label":"Image position",
+        "options": [
+          {
+            "value": "row",
+            "label": "Image to left"
+          },
+          {
+            "value": "row-reverse",
+            "label": "Image to right"
+          }
+        ],
+        "default": "row" 
+    },
+    {
+        "type": "checkbox",
+        "id": "show-telephone",
+        "label": "Ask for telephone number",
+        "default": false
+    },
+    {
+        "type": "color",
+        "id": "input_background",
+        "default": "transparent",
+        "label": "Input background"
+    },
+    {
+        "type": "color",
+        "id": "input_color_border",
+        "default": "#ffffff",
+        "label": "Input border color"
+    },
+    {
+        "type": "color",
+        "id": "placeholder",
+        "default": "#f8f8ff",
+        "label": "Placeholder color"
+    },
+    {
+        "type": "color",
+        "id": "button_background",
+        "default": "#ffffff",
+        "label": "Button background color"
+    },
+    {
+        "type": "color",
+        "id": "button_color",
+        "default": "#000000",
+        "label": "Button text color"
+    }
+   
+  ],
+  "presets": [
+    {
+      "name": "Contact us form"
+    }
+  ]
+}
+{% endschema %}

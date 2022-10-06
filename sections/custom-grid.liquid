@@ -1,0 +1,102 @@
+<div class="grid-uniform grid-link__container">.
+    {%- for collection in collections -%}
+        {%- for product in collection.products -%}
+          {%- assign grid_item_width = 'post-large--one-quarter medium--one-quarter small--one-half' -%}
+          {%- assign product_width = 300 -%}
+          {%- assign featured = product -%}
+      
+              <div class="grid__item {{ grid_item_width }}">
+        {% include 'product-grid-item' %}
+          </div>
+        {%- endfor -%}
+    {%- endfor -%}
+  </div>
+  
+  
+  {% schema %}
+  {
+    "name": {
+      "en": "Collection Grid"
+    },
+    "class": "index-section",
+    "settings": [
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": {
+              "cs": "Kolekce",
+              "da": "Kollektion",
+              "de": "Kategorie",
+              "en": "Collection",
+              "es": "Colección",
+              "fi": "Kokoelma",
+              "fr": "Collection",
+              "it": "Collezione",
+              "ja": "コレクション",
+              "ko": "컬렉션",
+              "nb": "Samling",
+              "nl": "Collectie",
+              "pl": "Kolekcja",
+              "pt-BR": "Coleção",
+              "pt-PT": "Coleção",
+              "sv": "Produktserie",
+              "th": "คอลเลกชัน",
+              "tr": "Koleksiyon",
+              "vi": "Bộ sưu tập",
+              "zh-CN": "收藏",
+              "zh-TW": "商品系列"
+            }
+          }
+        ],
+    "presets": [
+      {
+        "name": {
+          "cs": "Propagovaný produkt",
+          "da": "Fremhævet produkt",
+          "de": "Vorgestelltes Produkt",
+          "en": "Product list",
+          "es": "Producto destacado",
+          "fi": "Esittelyssä oleva tuote",
+          "fr": "Produit vedette",
+          "it": "Prodotto in primo piano",
+          "ja": "おすすめ商品",
+          "ko": "특별 상품",
+          "nb": "Utvalgt produkt",
+          "nl": "Uitgelicht product",
+          "pl": "Polecany produkt",
+          "pt-BR": "Produto em destaque",
+          "pt-PT": "Produto em destaque",
+          "sv": "Utvald produkt",
+          "th": "สินค้าที่แนะนำ",
+          "tr": "Öne çıkan ürün",
+          "vi": "Sản phẩm nổi bật",
+          "zh-CN": "特色产品",
+          "zh-TW": "精選產品"
+        },
+        "category": {
+          "cs": "Produkty",
+          "da": "Produkter",
+          "de": "Produkte",
+          "en": "Products",
+          "es": "Productos",
+          "fi": "Tuotteet",
+          "fr": "Produits",
+          "it": "Prodotti",
+          "ja": "商品について",
+          "ko": "제품",
+          "nb": "Produkter",
+          "nl": "Producten",
+          "pl": "Produkty",
+          "pt-BR": "Produtos",
+          "pt-PT": "Produtos",
+          "sv": "Produkter",
+          "th": "สินค้า",
+          "tr": "Ürünler",
+          "vi": "Sản phẩm",
+          "zh-CN": "产品",
+          "zh-TW": "產品"
+        }
+      }
+    ]
+  }
+  {% endschema %}
