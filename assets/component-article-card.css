@@ -22,7 +22,6 @@
 }
 
 .article-card__title {
-  text-decoration: none;
   word-break: break-word;
 }
 
@@ -48,6 +47,7 @@
 
 .article-card .card__heading {
   margin-bottom: 0.6rem;
+  font-weight: 600;
 }
 
 .blog-articles .article-card .card__information,

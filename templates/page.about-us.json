@@ -1,0 +1,117 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "c9afcabd-01a3-4f65-9004-c18fe4d4bcbd": {
+      "type": "image-with-text",
+      "blocks": {
+        "template--15570804965515__c9afcabd-01a3-4f65-9004-c18fe4d4bcbd-1680271495c1b091cb-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "OUR FOUNDER",
+            "heading_size": "h0",
+            "heading_color": "#4c7596"
+          }
+        },
+        "template--15570804965515__c9afcabd-01a3-4f65-9004-c18fe4d4bcbd-1680271495c1b091cb-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "text_style": "subtitle"
+          }
+        },
+        "template--15570804965515__c9afcabd-01a3-4f65-9004-c18fe4d4bcbd-1680271495c1b091cb-2": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "button_label": "Button label",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--15570804965515__c9afcabd-01a3-4f65-9004-c18fe4d4bcbd-1680271495c1b091cb-0",
+        "template--15570804965515__c9afcabd-01a3-4f65-9004-c18fe4d4bcbd-1680271495c1b091cb-1",
+        "template--15570804965515__c9afcabd-01a3-4f65-9004-c18fe4d4bcbd-1680271495c1b091cb-2"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/white-dress-blue-necklace.jpg",
+        "height": "adapt",
+        "desktop_image_width": "small",
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "left",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "7e1c604b-ba0c-496b-bfcc-4f8155c5f837": {
+      "type": "multicolumn",
+      "blocks": {
+        "template--15570804965515__7e1c604b-ba0c-496b-bfcc-4f8155c5f837-1680271736c0a8b370-0": {
+          "type": "column",
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "template--15570804965515__7e1c604b-ba0c-496b-bfcc-4f8155c5f837-1680271736c0a8b370-1": {
+          "type": "column",
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "template--15570804965515__7e1c604b-ba0c-496b-bfcc-4f8155c5f837-1680271736c0a8b370-2": {
+          "type": "column",
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--15570804965515__7e1c604b-ba0c-496b-bfcc-4f8155c5f837-1680271736c0a8b370-0",
+        "template--15570804965515__7e1c604b-ba0c-496b-bfcc-4f8155c5f837-1680271736c0a8b370-1",
+        "template--15570804965515__7e1c604b-ba0c-496b-bfcc-4f8155c5f837-1680271736c0a8b370-2"
+      ],
+      "settings": {
+        "title": "WHAT MAKES US DIFFERENT?",
+        "heading_size": "h1",
+        "heading_color": "#7f639e",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "columns_desktop": 3,
+        "column_alignment": "center",
+        "background_style": "primary",
+        "button_label": "Learn More",
+        "button_link": "shopify:\/\/pages\/contact",
+        "color_scheme": "background-1",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "c9afcabd-01a3-4f65-9004-c18fe4d4bcbd",
+    "7e1c604b-ba0c-496b-bfcc-4f8155c5f837"
+  ]
+}

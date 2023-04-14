@@ -1,0 +1,23 @@
+.icon-row {
+    display: grid;
+    align-items: start;
+    width: 100%;
+    height: 100%;
+    justify-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    margin: 0.5rem auto;
+    object-fit: cover;
+}
+.text-container h3, .text-container span {
+    margin: 0;
+    padding: 0;
+}
+.icons-section h1{
+    margin-top: 0;
+}
+.section-icon-container{
+    margin: 0 auto;
+}

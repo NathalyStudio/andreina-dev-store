@@ -1,0 +1,38 @@
+
+media-thumbnail {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  bottom: 45%;
+}
+
+.card:hover .thumbnail--arrows div {
+  opacity: 1;
+  transition: all .5s ease;
+  
+}
+
+.thumbnail--arrows {
+  font-weight: 600;
+}
+
+.thumbnail--arrows div {
+  position: absolute;
+  cursor: pointer;
+  width: 25px;
+  margin: 0 .5em;
+  border-radius: 33px;
+  opacity: 0;
+
+}
+
+.slide--prev {
+  transform: rotate(90deg);
+  left: 0;
+
+}
+
+.slide--next {
+  transform: rotate(-90deg);
+  right: 0;
+}

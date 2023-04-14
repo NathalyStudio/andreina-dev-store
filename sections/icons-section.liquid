@@ -1,0 +1,367 @@
+{{ 'component-icons-section.css' | asset_url | stylesheet_tag }}
+{% if section.settings.enable-carousel == true %}
+  {{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+{% endif %}
+
+{%- style -%}
+.section-{{ section.id }}-padding {
+  padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+  padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+}
+.icon-row-{{ section.id }} {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  justify-items: center;
+}
+.swiper-wrapper{
+  align-items: center;
+}
+@media screen and (min-width: 750px) {
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  .icon-row-{{ section.id }}{
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.icons-per-row }}, 1fr);
+    gap: {{ section.settings.grid_gap }}rem;
+  }
+}
+.swiper2-{{ section.id }} {
+  width: 100%;
+  overflow: hidden;
+}
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
+  <div class="section-icon-container {% if section.settings.layout == 'narrow' %} page-width--narrow {% elsif section.settings.layout == 'regular' %} page-width {% endif %}">
+  {% if section.settings.heading != blank %}
+    <h1 class="heading {{ section.settings.heading_size }} {{ section.settings.icons-section_heading_text_alignment }}">{{ section.settings.heading | escape }}</h1>
+  {% endif %}
+
+    <div class="swiper2-{{ section.id }} {% if section.settings.layout == 'narrow' %} page-width--narrow {% elsif section.settings.layout == 'regular' %} page-width {% endif %}">
+      <div class="{% if section.settings.enable-carousel == true %} swiper-wrapper {% else %} icon-row-{{ section.id }} {% endif %}">
+        {%- for block in section.blocks -%}
+        <div class="{% if section.settings.enable-carousel == true %} swiper-slide {% endif %} icon-row">
+          {%- case block.type -%}
+            {% when 'icon-slide' %}
+              {% if block.settings.link != blank %}
+                <a href="{{ block.settings.link }}" class="icon-link {{ section.settings.text-align }} link link--text focus-inset">
+              {% endif %}
+              {% if block.settings.icon != blank %}
+                <img src="{{ block.settings.icon | image_url: width: 5760 }}" alt="{{ block.settings.icon.alt }}" loading="lazy"
+                width="{{ block.settings.image-width }}" height="auto" class="featured-icon">
+              {% endif %}
+              <div class="text-container">
+                {% if block.settings.icon-title != blank %}
+                  <h3 class="h3 image-with-icon-list__heading">{{ block.settings.icon-title | escape }}</h3>
+                {% endif %}
+                {% if block.settings.icon-text != blank %}
+                  <span class="image-with-icon-list__text">{{ block.settings.icon-text }}</span>
+                {% endif %}
+              </div>
+              {% if block.settings.link != blank %}
+                </a>
+              {% endif %}
+            {% endcase %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% if section.settings.enable-carousel == true %}
+  <script src="{{ 'swiper-bundle.min.js' | asset_url }}"></script>
+  <script type="text/javascript">
+    const swiper2 = new Swiper('.swiper2-{{ section.id }}', {
+      // Optional parameters
+      direction: 'horizontal',
+      draggable: true,
+      loop: true,
+      autoplay: true,
+      autoplay: {
+        delay: {{ section.settings.carousel_speed }},
+      },
+      centeredSlides: true,
+
+        // Responsive breakpoints
+      breakpoints: {
+        "@0.00": {
+          slidesPerView: {{ section.settings.slides-per-view }},
+          spaceBetween: 10,
+        },
+        "@0.75": {
+          slidesPerView: {{ section.settings.slides-per-view }},
+          spaceBetween: 10,
+        },
+        "@1.00": {
+          slidesPerView: {{ section.settings.slides-per-view-desktop }},
+          spaceBetween: 30,
+        },
+      },
+      });
+  </script>
+{% endif %}
+
+
+{% schema %}
+{
+  "name": "Icons section",
+  "class": "icons-section",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "Narrow"
+        },
+        {
+          "value": "regular",
+          "label": "Regular"
+        },
+        {
+          "value": "full_width",
+          "label": "Full Width"
+        }
+      ],
+      "default": "regular",
+      "label": "Layout"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Heading",
+      "label": "Section heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "icons-section_heading_text_alignment",
+      "label": "Heading align",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:settings_schema.global.settings.text_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:settings_schema.global.settings.text_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:settings_schema.global.settings.text_alignment.options__3.label"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "t:sections.all.colors.accent_1.label"
+        },
+        {
+          "value": "accent-2",
+          "label": "t:sections.all.colors.accent_2.label"
+        },
+        {
+          "value": "background-1",
+          "label": "t:sections.all.colors.background_1.label"
+        },
+        {
+          "value": "background-2",
+          "label": "t:sections.all.colors.background_2.label"
+        },
+        {
+          "value": "inverse",
+          "label": "t:sections.all.colors.inverse.label"
+        }
+      ],
+      "default": "background-1",
+      "label": "t:sections.all.colors.label"
+    },
+    {
+      "type": "select",
+      "id": "text-align",
+      "label": "Align slide elements",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:settings_schema.global.settings.text_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:settings_schema.global.settings.text_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:settings_schema.global.settings.text_alignment.options__3.label"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Carousel settings",
+      "info": "Slide settings only works when carousel is enabled."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable-carousel",
+      "default": true,
+      "label": "Enable carousel"
+    },
+    {
+      "type": "range",
+      "id": "slides-per-view",
+      "default": 2,
+      "label": "Slides per view on mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "slides-per-view-desktop",
+      "default": 3,
+      "label": "Slides per view on desktop",
+      "min": 1,
+      "max": 7,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "carousel_speed",
+      "label": "Delay for autoscroll",
+      "info": "The lower the number, the faster the carousel will move.",
+      "default": 4000,
+      "min": 500,
+      "max": 7500,
+      "step": 100
+    },
+    {
+      "type": "header",
+      "content": "Logos/icons per row",
+      "info": "Setting when carousel is disabled."
+    },
+    {
+      "type": "range",
+      "id": "icons-per-row",
+      "default": 3,
+      "label": "Logos/icons per row on desktop",
+      "min": 1,
+      "max": 10,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "default": 3,
+      "label": "Space between icons/logos",
+      "min": 0.5,
+      "max": 10,
+      "step": 0.5,
+      "unit": "rem"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "icon-slide",
+      "name": "Icon Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon or logo"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "range",
+          "id": "image-width",
+          "min": 20,
+          "max": 200,
+          "step": 10,
+          "unit": "px",
+          "default": 50,
+          "label": "Icon or logo width in px"
+        },
+        {
+          "type": "text",
+          "id": "icon-title",
+          "label": "Icon title"
+        },
+        {
+          "type": "text",
+          "id": "icon-text",
+          "label": "Icon text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Icons section"
+    }
+  ]
+}
+{% endschema %}

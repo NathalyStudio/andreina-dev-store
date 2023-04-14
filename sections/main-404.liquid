@@ -1,8 +1,51 @@
 <style type="text/css">
+  @font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCvC73w0aXpsog.woff2) format('woff2');
+    unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+  }
+  @font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/montserrat/v25/JTUSjIg1_i6t8kCHKm459Wdhyzbi.woff2) format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  .template-404 {
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
   .template-404 .title + * {
     margin-top: 1rem;
   }
-
+  .description-404 {
+      font-weight: 700;
+  }
+  .title-404{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    letter-spacing: -1rem;
+    margin: 0 0 4rem 0;
+    line-height: .7;
+    text-align: center;
+    font-size: 14em;
+  }
+  .second-message-404 {
+    font-weight: 600;
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    text-align: center;
+    line-height: 1;
+    font-size: 1.7rem;
+    font-family: 'Montserrat', sans-serif;
+}
   @media screen and (min-width: 750px) {
     .template-404 .title + * {
       margin-top: 2rem;
@@ -11,12 +54,13 @@
 </style>
 
 <div class="template-404 page-width page-margin center">
-  <p>
-    {{ 'templates.404.subtext' | t }}
-  </p>
-  <h1 class="title">
-    {{ 'templates.404.title' | t }}
+  <span class="description-404">
+    OOPS! PAGE NOT FOUND
+  </span>
+  <h1 class="h0 title-404">
+    404
   </h1>
+  <p class="second-message-404">WE ARE SORRY, BUT THE PAGE YOU REQUESTED WAS NOT FOUND</p>
   <a href="{{ routes.all_products_collection_url }}" class="button">
     {{ 'general.continue_shopping' | t }}
   </a>

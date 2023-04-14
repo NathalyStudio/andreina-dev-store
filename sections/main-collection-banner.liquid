@@ -7,16 +7,32 @@
       padding-bottom: calc({{ settings.media_shadow_vertical_offset | at_least: 0 }}px + 2rem);
     }
   }
+
+  {% if section.settings.collection_image_banner %}
+    div.collection-image-banner {
+      display: block;
+      min-height: {{ section.settings.image_banner_size }}vh;
+      background-image: url('{{ section.settings.collection_image_banner | image_url }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  {% endif %}
+
 {%- endstyle -%}
 
 <div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
   <div class="collection-hero__inner page-width">
     <div class="collection-hero__text-wrapper">
+      {% if section.settings.show_collection_title %}
       <h1 class="collection-hero__title">
         <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
-        {{- collection.title | escape -}}
-      </h1>
 
+          {{- collection.title | escape -}}
+
+      </h1>
+      {% endif %}
+      
       {%- if section.settings.show_collection_description -%}
         <div class="collection-hero__description rte">{{ collection.description }}</div>
       {%- endif -%}
@@ -25,23 +41,31 @@
     {%- if section.settings.show_collection_image and collection.image -%}
       <div class="collection-hero__image-container media gradient">
         <img
-          srcset="{%- if collection.image.width >= 165 -%}{{ collection.image | image_url: width: 165 }} 165w,{%- endif -%}
+          srcset="
+            {%- if collection.image.width >= 165 -%}{{ collection.image | image_url: width: 165 }} 165w,{%- endif -%}
             {%- if collection.image.width >= 360 -%}{{ collection.image | image_url: width: 360 }} 360w,{%- endif -%}
             {%- if collection.image.width >= 535 -%}{{ collection.image | image_url: width: 535 }} 535w,{%- endif -%}
             {%- if collection.image.width >= 750 -%}{{ collection.image | image_url: width: 750 }} 750w,{%- endif -%}
             {%- if collection.image.width >= 1070 -%}{{ collection.image | image_url: width: 1070 }} 1070w,{%- endif -%}
             {%- if collection.image.width >= 1500 -%}{{ collection.image | image_url: width: 1500 }} 1500w,{%- endif -%}
-            {{ collection.image | image_url }} {{ collection.image.width }}w"
-          src="{{ collection.image | image_url: width: 750 }}"
-          sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc(50vw - 130px), calc(50vw - 55px)"
-          alt=""
-          width="{{ collection.image.width }}"
+        {{ collection.image | image_url }} {{ collection.image.width }}w
+                  "
+        src="{{ collection.image | image_url: width: 750 }}"
+        sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc(50vw - 130px), calc(50vw - 55px)"
+        alt=""
+        width="{{ collection.image.width }}"
           height="{{ collection.image.height }}"
         >
       </div>
     {%- endif -%}
   </div>
 </div>
+
+{% if section.settings.collection_image_banner %}
+<div class="collection-banner-container">
+  <div class="collection-image-banner"></div>
+</div>
+{% endif %}
 
 {% schema %}
 {
@@ -51,6 +75,26 @@
     {
       "type": "paragraph",
       "content": "t:sections.main-collection-banner.settings.paragraph.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_image_banner",
+      "label": "t:sections.main-collection-banner.settings.collection_image_banner.label"
+    },
+    {
+      "type": "range",
+      "id": "image_banner_size",
+      "label": "t:sections.main-collection-banner.settings.image_banner_size.label",
+      "info": "VH unit",
+      "min": 15,
+      "max": 100,
+      "default": 25
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_title",
+      "default": false,
+      "label": "t:sections.main-collection-banner.settings.show_collection_title.label"
     },
     {
       "type": "checkbox",

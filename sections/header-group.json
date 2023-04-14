@@ -1,0 +1,108 @@
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "announcement-bar-0": {
+          "type": "announcement",
+          "settings": {
+            "text": "Free Shipping on orders $75+",
+            "text_alignment": "center",
+            "color_scheme": "accent-1",
+            "link": ""
+          }
+        },
+        "e10799f8-9f1f-4fc1-baea-6626c13073b3": {
+          "type": "announcement",
+          "settings": {
+            "text": "20% OFF all items during April",
+            "text_alignment": "center",
+            "color_scheme": "accent-1",
+            "link": "shopify:\/\/collections\/all-products"
+          }
+        },
+        "d3bf5ebb-8790-4ef0-9650-4d89be94ed79": {
+          "type": "countdown-timer",
+          "settings": {
+            "countdown-text": "New Collection Drops In",
+            "countdown-date": "2023\/04\/20",
+            "enable-link": true,
+            "countdown-link": "shopify:\/\/collections\/all",
+            "color_scheme-timer": "accent-2",
+            "enable_days": true,
+            "days-label": "DAYS",
+            "hours-label": "HOURS",
+            "minutes-label": "MINS",
+            "seconds-label": "SECS"
+          }
+        }
+      },
+      "block_order": [
+        "announcement-bar-0",
+        "e10799f8-9f1f-4fc1-baea-6626c13073b3",
+        "d3bf5ebb-8790-4ef0-9650-4d89be94ed79"
+      ],
+      "settings": {
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "d73d6e2c-e74c-4ead-bc84-504bd27e7dfb": {
+          "type": "menu_heading_name",
+          "settings": {
+            "menu_heading_name": "Home",
+            "childlink_image_url": "shopify:\/\/collections\/perfect-collection",
+            "childlink_featured_image": "shopify:\/\/shop_images\/rack-of-womens-clothing.jpg",
+            "childlink_featured_text": "Spring 2023",
+            "childlink_featured_button": "Shop Now",
+            "childlink_featured_button_link": ""
+          }
+        },
+        "763f547e-0611-4ba3-bbae-83a32ba0eca8": {
+          "type": "menu_heading_name",
+          "settings": {
+            "menu_heading_name": "Women",
+            "childlink_image_url": "",
+            "childlink_featured_text": "Spring 2023",
+            "childlink_featured_button": "Shop Now",
+            "childlink_featured_button_link": "shopify:\/\/collections\/shirts"
+          }
+        },
+        "e430bf41-26a1-4c21-9417-e69a12191fba": {
+          "type": "menu_heading_name",
+          "settings": {
+            "menu_heading_name": "Men",
+            "childlink_image_url": "",
+            "childlink_featured_text": "Spring 2023",
+            "childlink_featured_button": "Shop Now",
+            "childlink_featured_button_link": "shopify:\/\/collections\/jackets"
+          }
+        }
+      },
+      "block_order": [
+        "d73d6e2c-e74c-4ead-bc84-504bd27e7dfb",
+        "763f547e-0611-4ba3-bbae-83a32ba0eca8",
+        "e430bf41-26a1-4c21-9417-e69a12191fba"
+      ],
+      "settings": {
+        "logo_position": "middle-left",
+        "menu": "main-menu",
+        "menu_type_desktop": "mega",
+        "sticky_header_type": "always",
+        "show_line_separator": true,
+        "color_scheme": "background-1",
+        "mobile_logo_position": "center",
+        "margin_bottom": 0,
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
+}

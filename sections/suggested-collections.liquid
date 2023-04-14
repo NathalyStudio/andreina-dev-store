@@ -1,0 +1,554 @@
+{% comment %} {{ collection.metafields.data.suggested_collections | strip }} {% endcomment %}
+{{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag: preload: true }}
+<style>
+  .suggestedCollections-swiper-pagination {
+    position: relative;
+    width: fit-content;
+    z-index: 0;
+    margin-top: 2rem;
+  }
+  a.collection-card-link {
+    text-decoration: none;
+  }
+  .swiper-wrapper img{
+    object-fit: cover;
+  }
+  .arrows-carousel{
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    .arrow-container{
+      position: relative;
+    }
+    .arrows-carousel{
+      display: block;
+      top: -4.5%;
+      z-index: 1;
+    }
+    .swiper-button-prev {
+      left: auto;
+      right: 7rem;
+    }
+    .metafield-rich_text_field {
+      max-width: 90%;
+    }
+  }
+  .swiper-button-next:after, 
+  .swiper-button-prev:after{
+    color: {{ section.settings.arrow_color }};
+    font-size: 2rem;
+    font-weight: 700;
+    background: {{ section.settings.background_arrow_color }};
+    border-radius: 50%;
+    width: 45px;
+    display: block;
+    height: 45px;
+  }
+  .swiper-button-next:after {
+    padding: 1.3rem 1.9rem;
+  }
+  .swiper-button-prev:after{
+    padding: 1.3rem 1.6rem;
+  }
+  .bottom-heading-collection-name{
+    text-decoration: none;
+    font-weight: {{ section.settings.font-weight }};
+    text-align: {{ section.settings.collection-name-align }};
+  }
+  .collection-without-image h2 {
+    text-align: center;
+    margin-top: 50%;
+    margin-bottom: 0;
+    color: {{ section.settings.collection-title-color }};
+    font-weight: {{ section.settings.font-weight }};
+  }
+</style>
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  .suggestedCollections-{{ section.id }} {
+    width: 100%;
+    overflow: hidden;
+  }
+  .collection-without-image{
+    background-color: {{ section.settings.color_for_no_image }};
+    height: 0;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+{% if section.settings.active_dot_color != blank %}
+  <style>
+    .swiper-pagination-bullet-active{
+      background-color: {{ section.settings.active_dot_color }};
+    }
+  </style>
+{% endif %}
+{% if collection.metafields.data.suggested_description_for_collections == blank %}
+  <style>
+    @media( min-width: 1024px) {
+      .arrows-carousel {
+        display: block;
+        top: -17.5%;
+        z-index: 1;
+      }
+    }
+  </style>
+{% endif %}
+<div class="color-{{ section.settings.color_scheme }} gradient" data-section="{{ section.id }}">
+  <div class="page-width section-{{ section.id }}-padding {% if section.settings.layout == 'narrow' %} page-width--narrow {% elsif section.settings.layout == 'regular' %} page-width {% endif %}">
+    <div class="collection-title-wrapper">
+      {% if section.settings.enable_collection_title == true %}
+        <h1 class="{{ section.settings.suggested-collection_heading_text_alignment }} {{ section.settings.heading_size }}">
+          <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
+          {{- collection.title | escape -}}
+        </h1> &nbsp;
+      {% endif %}&nbsp;
+      &nbsp;
+    </div>
+    {% if section.settings.enable_arrows == true %}
+      <div class="arrow-container"> 
+    {% endif %}    
+      {% if section.settings.enable_section_description == true %}
+        <div class="description-for-suggested-collection">
+          {% if collection.metafields.data.suggested_description_for_collections != blank %}
+            <span>{{ collection.metafields.data.suggested_description_for_collections | metafield_tag }}</span>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% assign childCollection =collection.metafields.data.suggested_collections.value %}
+      {%- liquid
+        assign highest_ratio = 0
+        for collection in childCollection
+          if childCollection.image.aspect_ratio > highest_ratio
+            assign highest_ratio = childCollection.image.aspect_ratio
+          endif
+        endfor
+      -%}
+      <div class="suggestedCollections-{{ section.id }} {% if section.settings.layout == 'narrow' %} page-width--narrow {% elsif section.settings.layout == 'regular' %} page-width {% endif %}">
+        {% if section.settings.enable_arrows == true and collection.metafields.data.suggested_collections.value != blank %}
+          <div class="swiper-button-next arrows-carousel">&nbsp;</div>
+          <div class="swiper-button-prev arrows-carousel">&nbsp;</div>
+        {% endif %}
+        <div class="swiper-wrapper">
+          {% for collection in childCollection %}
+            <div class="swiper-slide">
+              <div class="card-collection-wrapper">
+                <a href="{{ collection.url }}" class="collection-card-link">
+                  {% if collection.image != blank %}
+                    {% if section.settings.image_ratio == 'adapt' or section.settings.image_ratio == 'circle' %}
+                    {% endif %}
+                    <div
+                      class="media media--transparent media--{{ section.settings.image_ratio }}"
+                      {% if section.settings.image_ratio == 'adapt' %}
+                        style="padding-bottom: {{ 1 | divided_by: highest_ratio | times: 100 }}%;"
+                      {% endif %}
+                    >
+                      <img src="{{ collection.image | image_url: width: 500 }}" alt="{{ collection.image.alt }}" loading="lazy" width="200" height="auto" class="featured_image_collection_card ">
+                    </div>
+                  {% else %}
+                    <div class="collection-without-image media media--transparent media--{{ section.settings.image_ratio }}"
+                    {% if section.settings.image_ratio == 'adapt' %}
+                      style="padding-bottom: {{ 1 | divided_by: highest_ratio | times: 100 }}%;"
+                    {% endif %}>
+                      <h2 class="{{ section.settings.collection_no_image_heading_size }}">{{ collection.title }}</h2>
+                    </div>
+                  {% endif %}
+                  {% if section.settings.enable_bottom_title == true %}
+                    <h2 class="{{ section.settings.bottom_heading_size }} bottom-heading-collection-name">{{ collection.title | escape }}</h2>
+                  {% endif %}
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        {% if section.settings.enable_pagination_dots == true and collection.metafields.data.suggested_collections.value != blank %}
+          <div class="suggestedCollections-swiper-pagination"></div>
+        {% endif %}
+      </div>
+    {% if section.settings.enable_arrows == true %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script src="{{ 'swiper-bundle.min.js' | asset_url }}"></script>
+<script type="text/javascript">
+  const suggestedCollections = new Swiper('.suggestedCollections-{{ section.id }}', {
+    // Optional parameters
+    direction: 'horizontal',
+    draggable: true,
+    loop: {{ section.settings.enable_loop }},
+    autoplay: false,
+    grabCursor: true,
+    {% if section.settings.enable_arrows == true %}
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    {% endif %}
+    // Responsive breakpoints
+    breakpoints: {
+      "@0.00": {
+        slidesPerView: {{ section.settings.slides-per-view }},
+        spaceBetween: 10,
+      },
+      "@0.75": {
+        slidesPerView: {{ section.settings.slides-per-view }},
+        spaceBetween: 10,
+      },
+      "@1.00": {
+        slidesPerView: {{ section.settings.slides-per-view-desktop }},
+        spaceBetween: 30,
+      },
+    },
+    {% if section.settings.enable_pagination_dots == true %}
+    pagination: {
+      el: '.suggestedCollections-swiper-pagination',
+      clickable: true,
+    },
+    {% endif %}
+    
+    });
+   
+</script>
+
+{% schema %}
+{
+  "name": "Suggested collections",
+  "tag": "section",
+  "class": "suggested-collections-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_collection_title",
+      "label": "Enable collection title",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "suggested-collection_heading_text_alignment",
+      "label": "Heading align",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:settings_schema.global.settings.text_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:settings_schema.global.settings.text_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:settings_schema.global.settings.text_alignment.options__3.label"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_section_description",
+      "label": "Enable section description",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Collection Cards"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_loop",
+      "label": "Enable loop on carousel",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "slides-per-view",
+      "default": 2,
+      "label": "Slides per view on mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "slides-per-view-desktop",
+      "default": 5,
+      "label": "Slides per view on desktop",
+      "min": 1,
+      "max": 10,
+      "step": 1
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "No image"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.multicolumn.settings.image_ratio.options__2.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.multicolumn.settings.image_ratio.options__3.label"
+        },
+        {
+          "value": "circle",
+          "label": "t:sections.multicolumn.settings.image_ratio.options__4.label"
+        }
+      ],
+      "default": "portrait",
+      "label": "t:sections.multicolumn.settings.image_ratio.label"
+    },
+    {
+      "type": "color",
+      "id": "color_for_no_image",
+      "label": "Fallback background",
+      "info": "This is used when the collection doesn't have a featured image.",
+      "default": "#EF466D"
+    },
+    {
+      "type": "color",
+      "id": "collection-title-color",
+      "label": "Fallback text color",
+      "info": "Title color for collections with no image",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "collection_no_image_heading_size",
+      "options": [
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h2",
+      "label": "Inner heading size",
+      "info": "Heading size for collection title when there's no featured collection image. "
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_bottom_title",
+      "default": true,
+      "label": "Enable bottom title on card",
+      "info": "If box is checked, the name of the collection will appear on bottom of each card"
+    },
+    {
+      "type": "select",
+      "id": "bottom_heading_size",
+      "options": [
+        {
+          "value": "h3",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h2",
+      "label": "Bottom heading size",
+      "info": "Bottom name of collection. "
+    },
+    {
+      "type": "select",
+      "id": "font-weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Regular"
+        },
+        {
+          "value": "600",
+          "label": "Bold"
+        }
+      ],
+      "default": "600",
+      "label": "Collection name font weight"
+    },
+    {
+      "type": "select",
+      "id": "collection-name-align",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Collection name text align"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_pagination_dots",
+      "label": "Enable pagination dots",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "active_dot_color",
+      "label": "Active dot color",
+      "info": "Works only when dots are enabled."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_arrows",
+      "label": "Enable navigation arrows.",
+      "default": true,
+      "info": "If arrows are enabled, you can pick a color and background for arrows."
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Color of navigation arrows",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "background_arrow_color",
+      "label": "Background arrow color",
+      "default": "#F5F3F6"
+    },
+    {
+      "type": "header",
+      "content": "Section layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "Narrow"
+        },
+        {
+          "value": "regular",
+          "label": "Regular"
+        },
+        {
+          "value": "full_width",
+          "label": "Full Width"
+        }
+      ],
+      "default": "regular",
+      "label": "Layout"
+    },
+    {
+      "type": "header",
+      "content": "Color schema section settings"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "t:sections.all.colors.accent_1.label"
+        },
+        {
+          "value": "accent-2",
+          "label": "t:sections.all.colors.accent_2.label"
+        },
+        {
+          "value": "background-1",
+          "label": "t:sections.all.colors.background_1.label"
+        },
+        {
+          "value": "background-2",
+          "label": "t:sections.all.colors.background_2.label"
+        },
+        {
+          "value": "inverse",
+          "label": "t:sections.all.colors.inverse.label"
+        }
+      ],
+      "default": "background-1",
+      "label": "t:sections.all.colors.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+  {
+    "name": "Suggested collections"
+  }
+  ]
+}
+{% endschema %}

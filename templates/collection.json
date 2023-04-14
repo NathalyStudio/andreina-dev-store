@@ -1,8 +1,23 @@
 {
   "sections": {
+    "fbbccc3f-c317-4e2d-9c40-cf6f92981ad4": {
+      "type": "breadcrumbs",
+      "settings": {
+        "text_color": "#505050",
+        "home_text": "Home",
+        "collection_title": true,
+        "padding_top": 16,
+        "padding_bottom": 0,
+        "arrow": "slash"
+      }
+    },
     "banner": {
       "type": "main-collection-banner",
+      "disabled": true,
       "settings": {
+        "collection_image_banner": "shopify:\/\/shop_images\/womens-tops-hanging-on-rack.jpg",
+        "image_banner_size": 45,
+        "show_collection_title": false,
         "show_collection_description": true,
         "show_collection_image": false,
         "color_scheme": "background-1"
@@ -17,15 +32,21 @@
         "show_secondary_image": false,
         "show_vendor": false,
         "show_rating": false,
+        "enable_thumbnail_slider": true,
+        "enable_quick_view": true,
+        "enable_quick_add": false,
+        "enable_swatches": true,
         "enable_filtering": true,
+        "filter_type": "horizontal",
         "enable_sorting": true,
         "columns_mobile": "2",
-        "padding_top": 36,
+        "padding_top": 24,
         "padding_bottom": 36
       }
     }
   },
   "order": [
+    "fbbccc3f-c317-4e2d-9c40-cf6f92981ad4",
     "banner",
     "product-grid"
   ]

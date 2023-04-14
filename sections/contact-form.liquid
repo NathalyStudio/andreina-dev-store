@@ -5,40 +5,135 @@
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
-
+  .section-contact-form{
+    flex-direction: {{ section.settings.contact_position_on_mobile }};
+    margin-top: {{ section.settings.margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
+  }
+  .contact-form{
+    background: {{ section.settings.background_contact_snippet }};
+    justify-content: {{ section.settings.icons_layout }};
+  }
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
+    .section-contact-form{
+      flex-direction: {{ section.settings.contact_position_on_desktop }};
+        margin-top: {{ section.settings.margin_top }}px;
+        margin-bottom: {{ section.settings.margin_bottom }}px;
+      }
+  }
+  .contact-row {
+    color: {{ section.settings.text-color_contact_snippet }};
   }
 {%- endstyle -%}
+{% if section.settings.border_effect == true %}
+  <style>
+    .contact {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: var(--border-radious);
+      box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+  </style>  
+{% endif %}
+<div class="contact-form section-{{ section.id }}-padding ">
+  <div class="contact-row">
+    {% if section.settings.phone_icon != blank %}
+      <img src="{{ section.settings.phone_icon | image_url: width: 50 }}" alt="{{ section.settings.phone_icon.alt }}" loading="lazy" width="50" height="50">
+    {% endif %}
+    <div class="info_details">
+      {% unless section.settings.phone_number == blank %}
+        <span class="description">{{ section.settings.phone_number }}</span>
+      {% endunless %}
+    </div>
+  </div>
+  {% unless section.settings.email_icon == blank or section.settings.email_input == blank %}
+    <div class="contact-row">
+      {% if section.settings.email_icon != blank %}
+        <img src="{{ section.settings.email_icon | image_url: width: 50 }}" alt="{{ section.settings.email_icon.alt }}" loading="lazy" width="50" height="50">
+      {% endif %}
+      <div class="info_details">
+        <span class="description">{{ section.settings.email_input }}</span>
+      </div>
+    </div>
+  {% endunless %}
+  
+  {% unless section.settings.schedule_icon == blank or section.settings.schedule_line == blank %}
+    <div class="contact-row">
+      {% if section.settings.schedule_icon != blank %}
+        <img src="{{ section.settings.schedule_icon | image_url: width: 50 }}" alt="{{ section.settings.schedule_icon.alt }}" loading="lazy" width="50" height="50">
+      {% endif %}
+      <div class="info_details">
+        <span class="cta">{{ section.settings.schedule_line }}</span>
+      </div>
+    </div>
+  {% endunless %}
+  
+  {% unless section.settings.location_icon == blank or section.settings.location_line == blank %}
+    <div class="contact-row">
+      {% if section.settings.location_icon != blank %}
+        <img src="{{ section.settings.location_icon | image_url: width: 50 }}" alt="{{ section.settings.location_icon.alt }}" loading="lazy" width="50" height="50">
+      {% endif %}
+      <div class="info_details">
+        <span class="cta">{{ section.settings.location_line }}</span>
+      </div>
+    </div>
+  {% endunless %}
+
+</div>
 
 <div class="color-{{ section.settings.color_scheme }} gradient">
   <div class="contact page-width page-width--narrow section-{{ section.id }}-padding">
     {%- if section.settings.heading != blank -%}
-      <h2 class="title title-wrapper--no-top-margin {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</h2>
+      <h2 class="{{ section.settings.contact-form-heading_text_alignment }} title title-wrapper--no-top-margin {{ section.settings.heading_size }}">
+        {{ section.settings.heading | escape }}
+      </h2>
     {%- else -%}
       <h2 class="visually-hidden">{{ 'templates.contact.form.title' | t }}</h2>
     {%- endif -%}
     {%- form 'contact', id: 'ContactForm', class: 'isolate' -%}
       {%- if form.posted_successfully? -%}
-        <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>{% render 'icon-success' %} {{ 'templates.contact.form.post_success' | t }}</h2>
+        <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>
+          {% render 'icon-success' %}
+          {{ 'templates.contact.form.post_success' | t }}
+        </h2>
       {%- elsif form.errors -%}
         <div class="form__message">
-          <h2 class="form-status caption-large text-body" role="alert" tabindex="-1" autofocus>{% render 'icon-error' %} {{ 'templates.contact.form.error_heading' | t }}</h2>
+          <h2 class="form-status caption-large text-body" role="alert" tabindex="-1" autofocus>
+            {% render 'icon-error' %}
+            {{ 'templates.contact.form.error_heading' | t }}
+          </h2>
         </div>
         <ul class="form-status-list caption-large" role="list">
           <li>
             <a href="#ContactForm-email" class="link">
-              {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}
+              {{ form.errors.translated_fields.email | capitalize }}
+              {{ form.errors.messages.email }}
             </a>
           </li>
         </ul>
       {%- endif -%}
       <div class="contact__fields">
+        {% if section.settings.enable__subject == true %}
+          <div class="field">
+            <input class="field__input" autocomplete="subject" type="text" id="ContactForm-subject" name="contact[subject]" value="{% if form.subject %}{{ form.subject }}{% elsif customer %}{{ customer.name }}{% endif %}" placeholder="subject">
+            <label class="field__label" for="ContactForm-subject">Subject</label>
+          </div>
+        {% endif %}
         <div class="field">
-          <input class="field__input" autocomplete="name" type="text" id="ContactForm-name" name="contact[{{ 'templates.contact.form.name' | t }}]" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}" placeholder="{{ 'templates.contact.form.name' | t }}">
+          <input
+            class="field__input"
+            autocomplete="name"
+            type="text"
+            id="ContactForm-name"
+            name="contact[{{ 'templates.contact.form.name' | t }}]"
+            value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+            placeholder="{{ 'templates.contact.form.name' | t }}"
+          >
           <label class="field__label" for="ContactForm-name">{{ 'templates.contact.form.name' | t }}</label>
         </div>
         <div class="field field--with-error">
@@ -58,17 +153,33 @@
             {% endif %}
             placeholder="{{ 'templates.contact.form.email' | t }}"
           >
-          <label class="field__label" for="ContactForm-email">{{ 'templates.contact.form.email' | t }} <span aria-hidden="true">*</span></label>
+          <label class="field__label" for="ContactForm-email">
+            {{- 'templates.contact.form.email' | t }}
+            <span aria-hidden="true">*</span></label
+          >
           {%- if form.errors contains 'email' -%}
             <small class="contact__field-error" id="ContactForm-email-error">
               <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
-              <span class="form__message">{% render 'icon-error' %}{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</span>
+              <span class="form__message">
+                {%- render 'icon-error' -%}
+                {{- form.errors.translated_fields.email | capitalize }}
+                {{ form.errors.messages.email -}}
+              </span>
             </small>
           {%- endif -%}
         </div>
       </div>
       <div class="field">
-        <input type="tel" id="ContactForm-phone" class="field__input" autocomplete="tel" name="contact[{{ 'templates.contact.form.phone' | t }}]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}" placeholder="{{ 'templates.contact.form.phone' | t }}">
+        <input
+          type="tel"
+          id="ContactForm-phone"
+          class="field__input"
+          autocomplete="tel"
+          name="contact[{{ 'templates.contact.form.phone' | t }}]"
+          pattern="[0-9\-]*"
+          value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+          placeholder="{{ 'templates.contact.form.phone' | t }}"
+        >
         <label class="field__label" for="ContactForm-phone">{{ 'templates.contact.form.phone' | t }}</label>
       </div>
       <div class="field">
@@ -81,7 +192,9 @@
         >
           {{- form.body -}}
         </textarea>
-        <label class="form__label field__label" for="ContactForm-body">{{ 'templates.contact.form.comment' | t }}</label>
+        <label class="form__label field__label" for="ContactForm-body">
+          {{- 'templates.contact.form.comment' | t -}}
+        </label>
       </div>
       <div class="contact__button">
         <button type="submit" class="button">
@@ -96,7 +209,13 @@
 {
   "name": "t:sections.contact-form.name",
   "tag": "section",
-  "class": "section",
+  "class": "section-contact-form",
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
   "settings": [
     {
       "type": "text",
@@ -123,6 +242,26 @@
       ],
       "default": "h1",
       "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "contact-form-heading_text_alignment",
+      "label": "Heading align",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:settings_schema.global.settings.text_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:settings_schema.global.settings.text_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:settings_schema.global.settings.text_alignment.options__3.label"
+        }
+      ],
+      "default": "left"
     },
     {
       "type": "select",
@@ -153,6 +292,146 @@
       "label": "t:sections.all.colors.label"
     },
     {
+      "type": "checkbox",
+      "id": "border_effect",
+      "label": "Border effect",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable__subject",
+      "label": "Enable subject field",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Contact form details"
+    },
+    {
+      "type": "color",
+      "id": "background_contact_snippet",
+      "label": "Background of contact section",
+      "default": "#FAFAFA"
+    },
+    {
+      "type": "color",
+      "id": "text-color_contact_snippet",
+      "label": "Text color of contact section",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "contact_position_on_desktop",
+      "label": "Contact section position on desktop",
+      "options": [
+        {
+          "value": "row",
+          "label": "Left"
+        },
+        {
+          "value": "row-reverse",
+          "label": "Right"
+        }
+      ],
+      "default": "row"
+    },
+    {
+      "type": "select",
+      "id": "contact_position_on_mobile",
+      "label": "Contact section position on mobile",
+      "options": [
+        {
+          "value": "column",
+          "label": "Top"
+        },
+        {
+          "value": "column-reverse",
+          "label": "Bottom"
+        }
+      ],
+      "default": "column-reverse"
+    },
+    {
+      "type": "image_picker",
+      "id": "phone_icon",
+      "label": "Custom phone icon"
+    },
+    {
+      "type": "html",
+      "id": "phone_number",
+      "label": "Phone number info",
+      "default": "<p>Call Us<br>123-456-789</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "email_icon",
+      "label": "Custom email icon"
+    },
+    {
+      "type": "html",
+      "id": "email_input",
+      "label": "Email info",
+      "default": "<p>Email Us At<br> info@qodespace.com</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "schedule_icon",
+      "label": "Custom schedule icon"
+    },
+    {
+      "type": "html",
+      "id": "schedule_line",
+      "label": "Schedule line",
+      "default": "<p>M-F: 7:30 AM to 6:00 PM (PST)<br>Sat: 9:00 AM to 3:00 PM (PST)</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "location_icon",
+      "label": "Custom location icon"
+    },
+    {
+      "type": "html",
+      "id": "location_line",
+      "label": "Location line",
+      "default": "<p>Location line 1<br>Location line 2</p>"
+    },
+    {
+      "type": "header",
+      "content": "Contact info layout"
+    },
+    {
+      "type": "select",
+      "label": "Contact info layout",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Top"
+        },
+        {
+          "value": "flex-end",
+          "label": "Bottom"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "space-between",
+          "label": "Space between"
+        },
+        {
+          "value": "space-around",
+          "label": "Space around"
+        },
+        {
+          "value": "space-evenly",
+          "label": "Space evenly"
+        }
+      ],
+      "id": "icons_layout",
+      "default": "flex-start"
+    },
+    {
       "type": "header",
       "content": "t:sections.all.padding.section_padding_heading"
     },
@@ -175,6 +454,30 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Section Margin"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 35
     }
   ],
   "presets": [

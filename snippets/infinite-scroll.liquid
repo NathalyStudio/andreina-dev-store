@@ -1,0 +1,271 @@
+{% comment %}
+  {% render 'infinite-scroll', next_page: paginate.next.url, page_size: paginate.pages, end_text: "No more products to load" %}
+{% endcomment %}
+
+<infinite-scroll data-next="{{ next_page }}" data-page-size="{{ page_size }}" data-end-text="{{ end_text }}">
+    {% if page_size > 1 %}
+      <div class="loadingBox">
+        <span id="loading_1" class="loadingScroll">&nbsp</span>
+        <span id="loading_2" class="loadingScroll">&nbsp</span>
+        <span id="loading_3" class="loadingScroll">&nbsp</span>
+        <span id="loading_4" class="loadingScroll">&nbsp</span>
+        <span id="loading_5" class="loadingScroll">&nbsp</span>
+        <span id="loading_6" class="loadingScroll">&nbsp</span>
+        <span id="loading_7" class="loadingScroll">&nbsp</span>
+        <span id="loading_8" class="loadingScroll">&nbsp</span>
+      </div>
+    {% endif %}
+  </infinite-scroll>
+  <style>
+    infinite-scroll {
+      position: relative;
+      width: 100%;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease;
+    }
+  
+    .loadingBox {
+      position: relative;
+      width: 234px;
+      height: 28px;
+      margin: auto;
+    }
+  
+    .loadingScroll {
+      position: absolute;
+      top: 0;
+      background-color: rgb(0, 0, 0);
+      width: 28px;
+      height: 28px;
+      animation-name: loading_animation;
+      -o-animation-name: loading_animation;
+      -ms-animation-name: loading_animation;
+      -webkit-animation-name: loading_animation;
+      -moz-animation-name: loading_animation;
+      animation-duration: 1.5s;
+      -o-animation-duration: 1.5s;
+      -ms-animation-duration: 1.5s;
+      -webkit-animation-duration: 1.5s;
+      -moz-animation-duration: 1.5s;
+      animation-iteration-count: infinite;
+      -o-animation-iteration-count: infinite;
+      -ms-animation-iteration-count: infinite;
+      -webkit-animation-iteration-count: infinite;
+      -moz-animation-iteration-count: infinite;
+      animation-direction: normal;
+      -o-animation-direction: normal;
+      -ms-animation-direction: normal;
+      -webkit-animation-direction: normal;
+      -moz-animation-direction: normal;
+      transform: scale(0.3);
+      -o-transform: scale(0.3);
+      -ms-transform: scale(0.3);
+      -webkit-transform: scale(0.3);
+      -moz-transform: scale(0.3);
+    }
+  
+    #loading_1 {
+      left: 0;
+      animation-delay: 0.6s;
+      -o-animation-delay: 0.6s;
+      -ms-animation-delay: 0.6s;
+      -webkit-animation-delay: 0.6s;
+      -moz-animation-delay: 0.6s;
+    }
+  
+    #loading_2 {
+      left: 29px;
+      animation-delay: 0.75s;
+      -o-animation-delay: 0.75s;
+      -ms-animation-delay: 0.75s;
+      -webkit-animation-delay: 0.75s;
+      -moz-animation-delay: 0.75s;
+    }
+  
+    #loading_3 {
+      left: 58px;
+      animation-delay: 0.9s;
+      -o-animation-delay: 0.9s;
+      -ms-animation-delay: 0.9s;
+      -webkit-animation-delay: 0.9s;
+      -moz-animation-delay: 0.9s;
+    }
+  
+    #loading_4 {
+      left: 88px;
+      animation-delay: 1.05s;
+      -o-animation-delay: 1.05s;
+      -ms-animation-delay: 1.05s;
+      -webkit-animation-delay: 1.05s;
+      -moz-animation-delay: 1.05s;
+    }
+  
+    #loading_5 {
+      left: 117px;
+      animation-delay: 1.2s;
+      -o-animation-delay: 1.2s;
+      -ms-animation-delay: 1.2s;
+      -webkit-animation-delay: 1.2s;
+      -moz-animation-delay: 1.2s;
+    }
+  
+    #loading_6 {
+      left: 146px;
+      animation-delay: 1.35s;
+      -o-animation-delay: 1.35s;
+      -ms-animation-delay: 1.35s;
+      -webkit-animation-delay: 1.35s;
+      -moz-animation-delay: 1.35s;
+    }
+  
+    #loading_7 {
+      left: 175px;
+      animation-delay: 1.5s;
+      -o-animation-delay: 1.5s;
+      -ms-animation-delay: 1.5s;
+      -webkit-animation-delay: 1.5s;
+      -moz-animation-delay: 1.5s;
+    }
+  
+    #loading_8 {
+      left: 205px;
+      animation-delay: 1.64s;
+      -o-animation-delay: 1.64s;
+      -ms-animation-delay: 1.64s;
+      -webkit-animation-delay: 1.64s;
+      -moz-animation-delay: 1.64s;
+    }
+  
+    @keyframes loading_animation {
+      0% {
+        transform: scale(1);
+        background-color: rgb(0, 0, 0);
+      }
+  
+      100% {
+        transform: scale(0.3);
+        background-color: rgb(255, 255, 255);
+      }
+    }
+  
+    @-o-keyframes loading_animation {
+      0% {
+        -o-transform: scale(1);
+        background-color: rgb(0, 0, 0);
+      }
+  
+      100% {
+        -o-transform: scale(0.3);
+        background-color: rgb(255, 255, 255);
+      }
+    }
+  
+    @-ms-keyframes loading_animation {
+      0% {
+        -ms-transform: scale(1);
+        background-color: rgb(0, 0, 0);
+      }
+  
+      100% {
+        -ms-transform: scale(0.3);
+        background-color: rgb(255, 255, 255);
+      }
+    }
+  
+    @-webkit-keyframes loading_animation {
+      0% {
+        -webkit-transform: scale(1);
+        background-color: rgb(0, 0, 0);
+      }
+  
+      100% {
+        -webkit-transform: scale(0.3);
+        background-color: rgb(255, 255, 255);
+      }
+    }
+  
+    @-moz-keyframes loading_animation {
+      0% {
+        -moz-transform: scale(1);
+        background-color: rgb(0, 0, 0);
+      }
+  
+      100% {
+        -moz-transform: scale(0.3);
+        background-color: rgb(255, 255, 255);
+      }
+    }
+  </style>
+  <script>
+    class InfiniteScroll extends HTMLElement {
+      constructor() {
+        super();
+        this.gridParent = this.previousElementSibling;
+        this.gridContainer;
+  
+        if (this.gridParent.querySelector('#main-collection-product-grid')) {
+          this.gridContainer = this.gridParent.querySelector('#main-collection-product-grid');
+        } else {
+          this.gridContainer = this.gridParent.querySelector('#product-grid');
+        }
+  
+        this.pagination = document.querySelector('[class^="pagination"]');
+        this.init();
+        this.page = 1;
+      }
+  
+      init() {
+        const t = new IntersectionObserver(this.revealItem.bind(this), { root: null, threshold: 1 });
+        t.observe(this);
+        if (!this.pagination) return;
+        this.pagination.style.display = 'none';
+      }
+  
+      fetchNextPage(t) {
+        if (t <= this.dataset.pageSize) {
+          const pageUrl = `{{ shop.url }}/${this.dataset.next}`;
+          const url = new URL(pageUrl);
+          url.searchParams.set('page', t); // setting your param
+          const newUrl = url.href;
+  
+          fetch(`${url}`, { method: 'GET', headers: { 'Content-Type': 'text/html' } })
+            .then((t) => t.text())
+            .then((t) => {
+              const e = new DOMParser().parseFromString(t, 'text/html');
+              let innerHTML;
+  
+              if (e.querySelector('#main-collection-product-grid')) {
+                innerHTML = e.querySelector('#main-collection-product-grid').innerHTML;
+              } else {
+                innerHTML = e.querySelector('#product-grid').innerHTML;
+              }
+  
+              this.gridContainer.insertAdjacentHTML('beforeend', innerHTML);
+            })
+            ['finally'](() => {})
+            ['catch']((t) => {
+              console.error('Error:', t);
+            });
+        }
+        if (t == this.dataset.pageSize) {
+          this.innerHTML = `<h2>${this.dataset.endText}</h2>`;
+        }
+      }
+      revealItem(t, e) {
+        const [i] = t;
+  
+        if (!i.isIntersecting) return;
+        if (i.target) {
+          this.page++;
+          this.fetchNextPage(this.page);
+        }
+        if (this.page == this.dataset.pageSize) {
+          e.unobserve(i.target);
+        }
+      }
+    }
+    customElements.define('infinite-scroll', InfiniteScroll);
+  </script>

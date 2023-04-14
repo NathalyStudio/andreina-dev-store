@@ -1,0 +1,205 @@
+
+
+{% assign exclude_link = 'index,cart,list-collections' | split: ',' %}
+{% capture arrow %}
+    {% case section.settings.arrow %}
+        {% when "caret" %}
+            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-caret" viewBox="0 0 10 6" style="width: 10px; transform: rotate(-90deg) translateX(2px)">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor">
+            </svg>
+        {% when "slash" %}
+            /
+    {% endcase %}
+{% endcapture %}
+
+<style>
+
+  .breadcrumbs {
+    font-size: 1.4rem;
+  }
+
+  .breadcrumbs svg.icon.icon-caret {
+    width: 10px;
+    transform: rotate(-90deg) translateX(2px);
+  }
+  .breadcrumbs ol {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  .breadcrumbs li {
+    display: inline-block;
+  }
+  .breadcrumbs--home,
+  .breadcrumbs--link {
+    position: relative;
+    text-decoration: none;
+    color: currentColor;
+  }
+  .breadcrumbs--home::after,
+  .breadcrumbs--link::after {
+    content: '';
+    width: 102%;
+    border-bottom: 1px solid;
+    position: absolute;
+    bottom: 0;
+    left: -1px;
+    opacity: 0;
+  }
+  .breadcrumbs--home:hover:after,
+  .breadcrumbs--link:hover::after {
+    opacity: 1;
+  }
+  .breadcrumbs:not(:last-child) span {
+    text-underline-offset: 0.3rem;
+  }
+  .breadcrumbs:not(:last-child) span:hover {
+    transition: text-decoration 0.2s ease;
+  }
+  .breadcrumb--title {
+    font-weight: 600;
+    margin: 0;
+  }
+</style>
+{% unless exclude_link contains template.name %}
+  <div
+    class="breadcrumb--container page-width"
+    style="color: {{ section.settings.text_color }}; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+  >
+    {% if section.settings.collection_title %}
+      <p class="breadcrumb--title">{{ collection.title | escape }}</p>
+    {% endif %}
+    <nav class="breadcrumbs" role="navigation" aria-label="breadcrumbs">
+      <a class="breadcrumbs--home breadcrumbs--link" href="/" title="Home">{{ section.settings.home_text }}</a>
+      {{ arrow }}
+      {% case template.name %}
+        {% when 'page' %}
+          <span>{{ page.title }}</span>
+
+        {% when 'product' %}
+          <breadcrumb-link>
+            <a class="breadcrumbs--product breadcrumbs--link" href=""></a> {{ arrow }}
+            <script id="breadcrumb_obj" type="application/ld+json">
+              {
+                "all": {
+                "name": "Products",
+                "url": "/collections/all"
+                },
+                {% comment %} List out every collection in the store, so we can fill in the breadcrumb category via document.referrer below {% endcomment %}
+                {% for collection in collections %}
+                    "{{ collection.handle }}":
+                        {
+                            "name": "{{ collection.title }}",
+                            "url": "{{ collection.url }}"
+                        }
+                {% unless forloop.last %},{% endunless %}
+                {% endfor %}
+              }
+            </script>
+          </breadcrumb-link>
+          <span>{{ product.title }}</span>
+
+        {% when 'collection' %}
+          <span>{{ collection.title }}</span>
+
+        {% when 'article' %}
+          <span>{{ article.title }}</span>
+      {% endcase %}
+    </nav>
+  </div>
+{% endunless %}
+
+<script>
+  class BreadcrumbLink extends HTMLElement {
+    constructor() {
+      super();
+      this.prevLink = document.referrer;
+      this.obj = this.querySelector('#breadcrumb_obj').innerText;
+      this.parsedObj = JSON.parse(this.obj);
+      this.updateLink();
+    }
+    updateLink() {
+      if (this.prevLink.includes('collections')) {
+        {% comment %} Update collection name and URL in breadcrumb {% endcomment %}
+        const paramLink = this.prevLink.split('?')[0];
+        const _handle = paramLink.split('/');
+        const handle = _handle[_handle.length - 1];
+        const colObj = this.parsedObj[handle];
+        const product = this.querySelector('.breadcrumbs--product');
+        const urlParams = new URLSearchParams(this.prevLink);
+        product.href = this.prevLink;
+        product.innerHTML = colObj.name;
+      } else {
+        this.style.display = 'none';
+      }
+    }
+  }
+  customElements.define('breadcrumb-link', BreadcrumbLink);
+</script>
+
+{% schema %}
+{
+  "name": "Breadcrumbs",
+  "settings": [
+    {
+      "type": "color",
+      "id": "text_color",
+      "default": "#000",
+      "label": "Text color"
+    },
+    {
+      "type": "text",
+      "id": "home_text",
+      "label": "Home text",
+      "default": "Home"
+    },
+    {
+      "type": "checkbox",
+      "id": "collection_title",
+      "label": "Show / hide collection title",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    },
+    {
+      "type": "select",
+      "id": "arrow",
+      "options": [
+        {
+          "value": "caret",
+          "label": "Caret"
+        },
+        {
+          "value": "slash",
+          "label": "Slash"
+        }
+      ],
+      "default": "caret",
+      "label": "Arrow style"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Breadcrumbs"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,80 @@
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "collection_image_banner": "shopify:\/\/shop_images\/pexels-ksenia-chernaya-3965548.jpg",
+        "image_banner_size": 20,
+        "show_collection_title": false,
+        "show_collection_description": true,
+        "show_collection_image": false,
+        "color_scheme": "background-1"
+      }
+    },
+    "fbbccc3f-c317-4e2d-9c40-cf6f92981ad4": {
+      "type": "breadcrumbs",
+      "settings": {
+        "text_color": "#505050",
+        "home_text": "Home",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "arrow": "slash"
+      }
+    },
+    "2b0699ef-2719-4084-bc85-5058f3a72b5c": {
+      "type": "suggested-collections",
+      "settings": {
+        "enable_collection_title": false,
+        "heading_size": "h1",
+        "enable_section_description": false,
+        "enable_loop": true,
+        "slides-per-view": 2,
+        "slides-per-view-desktop": 5,
+        "image_ratio": "portrait",
+        "color_for_no_image": "#8e909c",
+        "collection-title-color": "#ffffff",
+        "collection_no_image_heading_size": "h2",
+        "enable_bottom_title": true,
+        "bottom_heading_size": "h3",
+        "font-weight": "400",
+        "collection-name-align": "center",
+        "enable_pagination_dots": true,
+        "active_dot_color": "#91a0a6",
+        "enable_arrows": true,
+        "arrow_color": "#000000",
+        "background_arrow_color": "#f5f3f6",
+        "layout": "regular",
+        "color_scheme": "background-1",
+        "padding_top": 20,
+        "padding_bottom": 4
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 16,
+        "columns_desktop": 4,
+        "image_ratio": "adapt",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_thumbnail_slider": true,
+        "enable_quick_view": true,
+        "enable_quick_add": false,
+        "enable_swatches": true,
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "columns_mobile": "2",
+        "padding_top": 24,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "fbbccc3f-c317-4e2d-9c40-cf6f92981ad4",
+    "2b0699ef-2719-4084-bc85-5058f3a72b5c",
+    "product-grid"
+  ]
+}

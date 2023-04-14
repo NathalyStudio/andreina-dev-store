@@ -1,3 +1,7 @@
+.blog {
+  margin-bottom: 1.5em;
+}
+
 .blog-placeholder {
   margin: 0 1.5rem;
   background: rgb(var(--color-background));

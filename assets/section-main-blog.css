@@ -59,3 +59,21 @@
     padding-bottom: 82.5rem;
   }
 }
+
+.blog-articles-2-row {
+  grid-template-columns: 1fr;
+  gap: 2.5em;
+}
+.blog-articles-2-row .article .card {
+  flex-direction: column;
+  gap: 1.5em
+}
+
+@media screen and (min-width: 750px) {
+  .blog-articles-2-row .article .card {
+    flex-direction: row;
+  }
+  .blog-articles-2-row .article:nth-child(2n+2) .card {
+    flex-direction: row-reverse;
+  }
+}

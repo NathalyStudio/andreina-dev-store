@@ -1,0 +1,142 @@
+{% comment %}
+  Renders a megamenu for the header.
+
+  Usage:
+  {% render 'header-mega-menu' %}
+{% endcomment %}
+
+<nav class="header__inline-menu">
+  <ul class="list-menu list-menu--inline" role="list">
+    {%- for link in section.settings.menu.links -%}
+      <li>
+        {%- if link.links != blank -%}
+          <header-menu>
+            <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu">
+              <summary class="header__menu-item list-menu__item link focus-inset">
+                <span
+                  {%- if link.child_active %}
+                    class="header__active-menu-item"
+                  {% endif %}
+                >
+                  {{- link.title | escape -}}
+                </span>
+                {% render 'icon-caret' %}
+              </summary>
+              <div
+                id="MegaMenu-Content-{{ forloop.index }}"
+                class="mega-menu__content gradient motion-reduce global-settings-popup"
+                tabindex="-1"
+              >
+                <div class="background-megamenu">
+                  <div class="container-megamenu" >
+                    <ul class="mega-menu__list {% if link.levels == 1 %} mega-menu__list--condensed{% endif %}"
+                    role="list">
+                      {%- for childlink in link.links -%}
+                        <li>
+                          <a
+                            href="{{ childlink.url }}"
+                            class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}"
+                            {% if childlink.current %}
+                              aria-current="page"
+                            {% endif %}
+                            aria-label=" {{ childlink.title | escape }}"
+                          >
+                            {{ childlink.title | escape }}
+                          </a>
+                          {%- if childlink.links != blank -%}
+                            <ul class="list-unstyled" role="list">
+                              {%- for grandchildlink in childlink.links -%}
+                                <li>
+                                  <a
+                                    href="{{ grandchildlink.url }}"
+                                    class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}"
+                                    {% if grandchildlink.current %}
+                                      aria-current="page"
+                                    {% endif %}
+                                    aria-label="{{ grandchildlink.title | escape }}"
+                                  >
+                                    {{ grandchildlink.title | escape }}
+                                  </a>
+                                </li>
+                              {%- endfor -%}
+                            </ul>
+                          {%- endif -%}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                    <div class="featured-image-container {{ block.shopify_attributes }}">
+                      {% for block in section.blocks %}
+                        {% case block.type %}
+                          {% when 'menu_heading_name'  %}
+                            {% assign menu_heading_name = block.settings.menu_heading_name %}
+                            {% if link.title == menu_heading_name %}
+                              {% if block.settings.childlink_image_url != blank %}
+                                <a href="{{ block.settings.childlink_image_url }}" class="mega-menu__link">
+                              {% endif %}
+                              <div class="image_childlink_wrapper">
+                                  {% if block.settings.childlink_featured_image != blank %}
+                                    <img loading="lazy" src="{{ block.settings.childlink_featured_image | image_url: width: 1024 }}" 
+                                        alt="{{ block.settings.childlink_featured_image_alt | escape }}" 
+                                        width="500" height="auto" class="featured-image__img"/>
+                                  {% endif %}
+                                  {% if block.settings.childlink_featured_text != blank %}
+                                    <span class="featured-text">
+                                      {{ block.settings.childlink_featured_text | escape }}
+                                    </span>
+                                  {% endif %}
+                                  {% if block.settings.childlink_featured_button != blank %}
+                                    <a class="childlink_featured_button mega-menu__link" href="{{ block.settings.childlink_featured_button_link }}" aria-label="{{ block.settings.childlink_featured_button }}"> {{ block.settings.childlink_featured_button }}</a>
+                                  {% endif %}
+                              </div>
+                              {% if block.settings.childlink_image_url != blank %}
+                                </a>
+                              {% endif %}
+                            {% endif %}
+                        {% endcase %}
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </details>
+          </header-menu>
+        {%- else -%}
+          <a
+            href="{{ link.url }}"
+            class="header__menu-item list-menu__item link link--text focus-inset"
+            {% if link.current %}
+              aria-current="page"
+            {% endif %}
+            aria-label="{{- link.title | escape -}}"
+          >
+            <span
+              {%- if link.current %}
+                class="header__active-menu-item"
+              {% endif %}
+            >
+              {{- link.title | escape -}}
+            </span>
+          </a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>
+
+{% if settings.enable_dropdown_on_hover == true %}
+<script>
+  let items = document.querySelector(".header__inline-menu").querySelectorAll("details");
+  items.forEach(item => {
+    item.addEventListener("mouseover", () => {
+      item.setAttribute("open", true);
+      item.querySelector("ul").addEventListener("mouseleave", () => {
+        item.removeAttribute("open");
+      });
+    item.addEventListener("mouseleave", () => {
+      item.removeAttribute("open");
+    });
+  });
+  
+  });
+</script>
+{% endif %}

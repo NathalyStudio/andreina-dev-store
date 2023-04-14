@@ -1,0 +1,149 @@
+{
+  "sections": {
+    "94b7a074-1df6-4d91-96a1-9b245a4ddbd8": {
+      "type": "breadcrumbs",
+      "settings": {
+        "text_color": "#000000",
+        "home_text": "Home",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "arrow": "caret"
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "fa54c5aa-ba90-4dd5-bf05-88c7e2da441b": {
+      "type": "collapsible-content",
+      "blocks": {
+        "template--15570914902155__fa54c5aa-ba90-4dd5-bf05-88c7e2da441b-1680280188e6c2f568-0": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Question 1",
+            "icon": "none",
+            "row_content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "page": ""
+          }
+        },
+        "template--15570914902155__fa54c5aa-ba90-4dd5-bf05-88c7e2da441b-1680280188e6c2f568-1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Question 2",
+            "icon": "none",
+            "row_content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "page": ""
+          }
+        },
+        "template--15570914902155__fa54c5aa-ba90-4dd5-bf05-88c7e2da441b-1680280188e6c2f568-2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Question 3",
+            "icon": "none",
+            "row_content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "page": ""
+          }
+        },
+        "template--15570914902155__fa54c5aa-ba90-4dd5-bf05-88c7e2da441b-1680280188e6c2f568-3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Question 4",
+            "icon": "none",
+            "row_content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--15570914902155__fa54c5aa-ba90-4dd5-bf05-88c7e2da441b-1680280188e6c2f568-0",
+        "template--15570914902155__fa54c5aa-ba90-4dd5-bf05-88c7e2da441b-1680280188e6c2f568-1",
+        "template--15570914902155__fa54c5aa-ba90-4dd5-bf05-88c7e2da441b-1680280188e6c2f568-2",
+        "template--15570914902155__fa54c5aa-ba90-4dd5-bf05-88c7e2da441b-1680280188e6c2f568-3"
+      ],
+      "settings": {
+        "caption": "",
+        "heading": "Shipping",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "color_scheme": "background-1",
+        "container_color_scheme": "background-2",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "98cc1263-0626-45a3-96a7-ef62dcc9798e": {
+      "type": "collapsible-content",
+      "blocks": {
+        "template--15570914902155__98cc1263-0626-45a3-96a7-ef62dcc9798e-1680280188e6c2f568-0": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Question 1",
+            "icon": "none",
+            "row_content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "page": ""
+          }
+        },
+        "template--15570914902155__98cc1263-0626-45a3-96a7-ef62dcc9798e-1680280188e6c2f568-1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Question 2",
+            "icon": "none",
+            "row_content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "page": ""
+          }
+        },
+        "template--15570914902155__98cc1263-0626-45a3-96a7-ef62dcc9798e-1680280188e6c2f568-2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Question 3",
+            "icon": "none",
+            "row_content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "page": ""
+          }
+        },
+        "template--15570914902155__98cc1263-0626-45a3-96a7-ef62dcc9798e-1680280188e6c2f568-3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Question 4",
+            "icon": "none",
+            "row_content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--15570914902155__98cc1263-0626-45a3-96a7-ef62dcc9798e-1680280188e6c2f568-0",
+        "template--15570914902155__98cc1263-0626-45a3-96a7-ef62dcc9798e-1680280188e6c2f568-1",
+        "template--15570914902155__98cc1263-0626-45a3-96a7-ef62dcc9798e-1680280188e6c2f568-2",
+        "template--15570914902155__98cc1263-0626-45a3-96a7-ef62dcc9798e-1680280188e6c2f568-3"
+      ],
+      "settings": {
+        "caption": "",
+        "heading": "Returns & Exchanges",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "color_scheme": "background-1",
+        "container_color_scheme": "background-2",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "94b7a074-1df6-4d91-96a1-9b245a4ddbd8",
+    "main",
+    "fa54c5aa-ba90-4dd5-bf05-88c7e2da441b",
+    "98cc1263-0626-45a3-96a7-ef62dcc9798e"
+  ]
+}

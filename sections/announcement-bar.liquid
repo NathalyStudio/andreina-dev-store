@@ -1,29 +1,91 @@
+{%- if section.blocks.size > 1 -%}
+  {{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'swiper-bundle.min.js' | asset_url }}"></script>
+{% for block in section.blocks %}
+  {% if block.type == 'countdown-timer' %}
+    <style>
+      .announcement_wrapper .swiper-wrapper {
+        height: 38px;
+      }
+      @media (max-width: 550px){
+        .announcement_wrapper .swiper-wrapper {
+          height: 65px;
+        }
+        .announcement-bar__message{
+          padding: 0;
+        }
+      }
+    </style>
+    {% else %}
+    <style>
+      .announcement_wrapper .swiper-wrapper {
+        height: 38px;
+      }
+    </style>
+  {% endif %}
+{% endfor %}
+ 
+  <div class="announcement_wrapper swiper swiper-{{ section.id }}"> 
+    <div class="swiper-wrapper"> 
+{%- endif -%}
+
 {%- for block in section.blocks -%}
   {%- case block.type -%}
     {%- when 'announcement' -%}
-      <div class="announcement-bar color-{{ block.settings.color_scheme }} gradient" role="region" aria-label="{{ 'sections.header.announcement' | t }}" {{ block.shopify_attributes }}>
+      <div class="announcement-bar color-{{ block.settings.color_scheme }} gradient swiper-slide" role="region" aria-label="{{ 'sections.header.announcement' | t }}" {{ block.shopify_attributes }} style="display: flex; align-items: center;">
         {%- if block.settings.text != blank -%}
           {%- if block.settings.link != blank -%}
-            <a href="{{ block.settings.link }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
+            <a href="{{ block.settings.link }}" class="announcement-bar__link link link--text focus-inset animate-arrow" aria-label="{{ block.settings.text | escape }}">
           {%- endif -%}
-              <p class="announcement-bar__message h5">
-                {{ block.settings.text | escape }}
-                {%- if block.settings.link != blank -%}
-                  {% render 'icon-arrow' %}
-                {%- endif -%}
-              </p>
+              <div class="page-width">
+                <p class="announcement-bar__message {{ block.settings.text_alignment }} h4">
+                  <span>{{ block.settings.text | escape }}</span>
+                  {%- if block.settings.link != blank -%}
+                    {% render 'icon-arrow' %}
+                  {%- endif -%}
+                </p>
+              </div>
           {%- if block.settings.link != blank -%}
             </a>
           {%- endif -%}
         {%- endif -%}
       </div>
+      {% when 'countdown-timer' %}
+        {% render 'countdown-timer', countdown-date: block.settings.countdown-date, color_scheme-timer: block.settings.color_scheme-timer, countdown-text: block.settings.countdown-text, enable-link: block.settings.enable-link, countdown-link: block.settings.countdown-link, days: block.settings.days-label, hours: block.settings.hours-label, minutes: block.settings.minutes-label, seconds: block.settings.seconds-label, enable-days: block.settings.enable_days %}
   {%- endcase -%}
 {%- endfor -%}
+
+{%- if section.blocks.size > 1 -%}
+</div>
+</div>
+
+<script type="text/javascript">
+  const swiper = new Swiper('.swiper-{{ section.id }}', {
+    // Optional parameters
+    direction: 'vertical',
+    draggable: true,
+    loop: false,
+    {%- if section.blocks.size > 1 -%}
+      autoplay: true,
+      autoplay: {
+        delay: 3500,
+      },
+    {% else %}
+      allowTouchMove: false,
+      autoplay: false,
+    {%- endif -%}
+    centeredSlides: true,
+    slidesPerView: 1,
+    spaceBetween: 3,
+  });
+</script>
+{%- endif -%}
 
 {% schema %}
 {
   "name": "t:sections.announcement-bar.name",
   "max_blocks": 12,
+  "class": "announcement-bar-section",
   "blocks": [
     {
       "type": "announcement",
@@ -34,6 +96,26 @@
           "id": "text",
           "default": "Welcome to our store",
           "label": "t:sections.announcement-bar.blocks.announcement.settings.text.label"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.options__1.label"
+            },
+            {
+              "value": "center",
+              "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.options__2.label"
+            },
+            {
+              "value": "right",
+              "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.options__3.label"
+            }
+          ],
+          "default": "center",
+          "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.label"
         },
         {
           "type": "select",
@@ -67,6 +149,98 @@
           "type": "url",
           "id": "link",
           "label": "t:sections.announcement-bar.blocks.announcement.settings.link.label"
+        }
+      ]
+    },
+    {
+      "type": "countdown-timer",
+      "name": "Countdown timer",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "countdown-text",
+          "label": "Countdown text",
+          "default": "PROMOTION DAY"
+        },
+        {
+          "type": "text",
+          "id": "countdown-date",
+          "label": "Countdown to date",
+          "info":  "Date format: YYYY/MM/DD",
+          "default": "2023/04/15"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable-link",
+          "label": "Enable link",
+          "default": false
+        },
+        {
+          "type": "url",
+          "id": "countdown-link",
+          "label": "Link"
+        },
+        {
+          "type": "select",
+          "id": "color_scheme-timer",
+          "options": [
+            {
+              "value": "accent-1",
+              "label": "t:sections.all.colors.accent_1.label"
+            },
+            {
+              "value": "accent-2",
+              "label": "t:sections.all.colors.accent_2.label"
+            },
+            {
+              "value": "background-1",
+              "label": "t:sections.all.colors.background_1.label"
+            },
+            {
+              "value": "background-2",
+              "label": "t:sections.all.colors.background_2.label"
+            },
+            {
+              "value": "inverse",
+              "label": "t:sections.all.colors.inverse.label"
+            }
+          ],
+          "default": "accent-2",
+          "label": "t:sections.all.colors.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_days",
+          "label": "Show days on countdown",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "days-label",
+          "label": "Days divider",
+          "placeholder": "days",
+          "default": "days"
+        },
+        {
+          "type": "text",
+          "id": "hours-label",
+          "label": "Hours divider",
+          "placeholder": "hours",
+          "default": ":"
+        },
+        {
+          "type": "text",
+          "id": "minutes-label",
+          "label": "Minutes divider",
+          "placeholder": "minutes",
+          "default": ":"
+        },
+        {
+          "type": "text",
+          "id": "seconds-label",
+          "label": "Seconds divider",
+          "placeholder": "seconds"
         }
       ]
     }

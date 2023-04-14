@@ -136,7 +136,7 @@
           readonly
         >
         <div class="gift-card__copy-code">
-          <button class="link gift-card__copy-link">{{ 'gift_cards.issued.copy_code' | t }}</button>
+          <button class="link gift-card__copy-link" role="button" aria-label="{{ 'gift_cards.issued.copy_code' | t }}">{{ 'gift_cards.issued.copy_code' | t }}</button>
           <span class="gift-card__copy-success form__message" role="status"></span>
           <template>
             {%- render 'icon-success' -%}{{ 'gift_cards.issued.copy_code_success' | t }}
@@ -160,6 +160,7 @@
           <button
             class="button button--secondary"
             onclick="window.print();"
+            role="button" aria-label="{{ 'gift_cards.issued.print_gift_card' | t }}"
           >
             {{ 'gift_cards.issued.print_gift_card' | t }}
           </button>
