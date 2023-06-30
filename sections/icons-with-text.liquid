@@ -1,3 +1,5 @@
+<h3>{{section.settings.heading}}</h3>
+<p>{{sections.settings.description}}</p>
 {% schema %}
   {
     "name": "icons with text",
@@ -11,6 +13,19 @@
                     "type":"richtext",
                     "label":"your description",
                     "id":"description"
+                  }
+                ],
+    "blocks" :  [
+                  {
+                    "type": "image",
+                    "name": "image block",
+                    "settings":[
+                                  {
+                                    "type":"image_picker",
+                                    "label":"your image",
+                                    "id":"image"
+                                  }
+                                ]
                   }
                 ]
   }
